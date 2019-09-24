@@ -216,29 +216,32 @@ fun nodes:: "tree0 \<Rightarrow> nat" where
 "nodes Tip = 1" | 
 "nodes (Node x y) = 1 + (nodes x) + (nodes y)"
 
+
 fun explode :: "nat \<Rightarrow> tree0 \<Rightarrow> tree0 " where 
 "explode 0 t = t"| 
-"explode (Suc n) t = explode n (Node t t)"
+"explode (Suc n) t = Node (explode n t) (explode n t)"
 
-lemma nodes_span_rule0 [simp]: " nodes t = n \<Longrightarrow> nodes (Node t t) =  2 * n  + 1"
+(*lemma explode_suc : "nodes (explode (Suc n) t ) = nodes (explode n (Node t t ))"
+  apply auto 
+  done 
+*)
+
+
+lemma explode_expand: "explode (Suc n) t = Node (explode n t) (explode n t)"
+ 
+  apply (induction n)
   apply auto
-  done
+  done 
 
-lemma nodes_plus : "nodes t = n \<Longrightarrow> nodes t + nodes t = 2 * nodes t"
+lemma "nodes(explode (Suc n) t ) = 1 + 2 * nodes (explode n t)"
   apply auto 
   done 
 
 
-
-lemma explode_simp [simp] : "nodes (explode (Suc n) t) = nodes(Node (explode n t) (explode n t))"
-  apply (simp add:nodes_plus)
-
-  apply auto
-  sorry 
-
 lemma "nodes (explode n t) =  (2^n - 1) + (2 ^ n) * nodes t" 
-  apply (simp add:explode_simp)
-  sorry 
+  apply (induction n )
+  apply auto 
+  done 
 
 
 (* arithmetic Example *)
