@@ -1,0 +1,9 @@
+#!/bin/sh
+echo \
+"(* Author: z5141448 Toby HUANG *)
+theory ${1}
+  imports Main
+begin
+
+
+end" > "${1}.thy"

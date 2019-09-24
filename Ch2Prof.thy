@@ -1,4 +1,4 @@
-theory ExerciseProgProf
+theory Ch2Prof
 imports Complex_Main
 begin
 

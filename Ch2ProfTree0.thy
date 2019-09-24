@@ -1,4 +1,4 @@
-theory ExerciseProgProfTree0
+theory Ch2ProfTree0
   imports Main
 begin
 
