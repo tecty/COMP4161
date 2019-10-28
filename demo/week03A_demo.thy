@@ -7,9 +7,9 @@ theory week03A_demo imports Main begin
 \<comment> \<open> {* A successful proof: *} \<close>
 lemma "\<forall>a. \<exists>b. a = b"
   apply (rule allI) thm exI
-  apply (rule_tac x=a in exI)
+  apply (rule_tac  x=a in exI)
   apply (rule refl)
-  done
+  done 
 
 \<comment> \<open> {* An unsuccessful proof: *} \<close>
 lemma "\<exists>y. \<forall>x. x = y"
@@ -21,11 +21,11 @@ oops
 \<comment> \<open> {* Intro and elim reasoning: *} \<close>
 lemma "\<exists>b. \<forall>a. P a b \<Longrightarrow> \<forall>a. \<exists>b. P a b"
   apply (rule allI)
-  apply (erule exE)thm exI
-  apply (rule_tac x=b in exI)
+  apply (erule exE)
   apply (erule_tac x=a in allE)
-  apply assumption
-  done
+  apply (rule_tac x=b in  exI)
+  apply assumption 
+  done 
  (* the safe rules first! *)
  (* (check what happens if you use unsafe rule too early) *)
 
@@ -35,22 +35,22 @@ lemma "\<exists>b. \<forall>a. P a b \<Longrightarrow> \<forall>a. \<exists>b. P
 \<comment> \<open> {* Instantiating allE: *} \<close>
 lemma "\<forall>x. P x \<Longrightarrow> P 37"
   thm allE
-  apply (erule_tac x="37" in allE)
+  apply (erule_tac x="37" in allE )
   apply assumption
   done
 
 \<comment> \<open> {* Instantiating exI: *} \<close>
 
 lemma "\<exists>n. P (f n) \<Longrightarrow> \<exists>m. P m"
-  apply (erule exE)
-  apply (rule_tac x="f n" in exI)
+  apply (erule exE) thm exI 
+  apply (rule_tac  x="f n"  in exI)
   apply assumption
   done
 
 
 \<comment> \<open> {* Instantiation removes ambiguity: *} \<close>
 lemma "\<lbrakk> A \<and> B; C \<and> D \<rbrakk> \<Longrightarrow> D"
-apply(erule_tac P = "C" and Q="D" in conjE)
+  apply(erule_tac P = "C" and Q="D" in conjE)
 (* without instantiation, the wrong one is chosen (first) *)
 apply assumption
 done
@@ -71,13 +71,12 @@ apply(rename_tac a b)
 oops
 
 lemma "\<forall>x. P x \<Longrightarrow> \<forall>x. \<forall>x. P x"
-apply(rule allI)
-apply(rule allI)
-apply(rename_tac y)
-apply(erule_tac x=y in allE)
-apply assumption
-done
-
+  apply (rule allI) thm allI
+  apply (rule allI)
+  apply (rename_tac y)
+  apply (erule_tac x=y in allE)
+  apply assumption 
+  done 
 
 
 
@@ -171,15 +170,17 @@ lemma "(\<forall>x. P x \<longrightarrow> Q) = ((\<exists>x. P x) \<longrightarr
    using only the rules: allI, allE, exI, exE and someI; with only the
    proof methods: rule, erule, rule_tac, erule_tac and assumption, prove:
 *} \<close>
- thm someI
+thm someI [where P="f" and x="x"]
  
 lemma choice:
   "\<forall>x. \<exists>y. R x y \<Longrightarrow> \<exists>f. \<forall>x. R x (f x)" 
-  apply(rule exI)
-  apply(rule allI)
-  apply(erule allE)
-  apply(erule exE)
+  apply (rule exI)
+  apply (rule allI)
+  apply (erule allE)
+  apply (erule exE)
+  apply (erule someI)
+  done
+  
 
-oops
 
 end
