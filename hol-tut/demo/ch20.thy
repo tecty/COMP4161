@@ -1,4 +1,4 @@
-theory Demo
+theory ch20
 imports Main
 begin
 
@@ -30,7 +30,7 @@ fun sep :: "'a \<Rightarrow> 'a list \<Rightarrow> 'a list" where
 "sep a (x#y#zs) = x # a # sep a (y#zs)"
 
 lemma "map f (sep a xs) = sep (f a) (map f xs)"
-apply(induct a xs rule: sep.induct)
+apply(induct xs rule: sep.induct)
 apply auto
 done
 

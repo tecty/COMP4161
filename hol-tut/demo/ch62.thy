@@ -1,5 +1,5 @@
-theory Demo
-imports Main Sum_Of_Squares
+theory ch62
+imports Main 
 begin
 
 section{* blast *}
@@ -53,7 +53,8 @@ oops
 section{* Sledgehammer!!! *}
 
 lemma "(i::int) div k = 0  \<longleftrightarrow>  k=0 | 0<=i & i<k | i<=0 & k<i"
-oops
+ using zdiv_eq_0_iff by blast
+
 
 
 section{* Arithmetic *}
@@ -63,7 +64,8 @@ by arith
 
 text{* \<rightarrow> Frobenius number *}
 
-lemma "(x::real)^2 + y^2 + z^2 = 1 \<Longrightarrow> (x + y + z)^2 \<le> 3"
-by(sos csdp)
+lemma "(x::nat)^2 + y^2 + z^2 = 1 \<Longrightarrow> (x + y + z)^2 \<le> 3"
+  sledgehammer
+  by (metis (no_types, lifting) One_nat_def Suc_leI add.left_neutral add_cancel_left_right add_right_cancel le_neq_trans le_numeral_extra(4) less_imp_le neq0_conv not_add_less2 numeral_le_one_iff semiring_norm(70) zero_eq_power2)
 
 end

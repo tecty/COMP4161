@@ -55,13 +55,25 @@ done
 (* For interactive proofs developed together with the students: *)
 
 lemma "A \<or> B \<longrightarrow> B \<or> A"
+  apply (rule impI)
+  apply (erule disjE)
+  apply blast+
 oops
 
 lemma "\<lbrakk> A \<longrightarrow> B; B \<longrightarrow> C \<rbrakk> \<Longrightarrow> A \<longrightarrow> C"
+  apply safe
 oops
 
 lemma "\<not>A \<or> \<not>B \<Longrightarrow> \<not>(A \<and> B)"
-oops
+  apply (erule disjE)
+   apply (rule notI)
+   apply (erule conjE)
+   apply (erule notE)
+   apply assumption
+  apply (rule notI)
+  apply (erule conjE)
+  apply (erule notE)
+  apply assumption
 
 
 subsection{* Further useful techniques *}
